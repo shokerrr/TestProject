@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Home page";
+}
+
+<h3>Выберите файл для загрузки</h3>
+@try
+{
+    @using (Html.BeginForm("AddFile", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <input type="file" name="file" onchange="javascript:this.form.submit();">
+    }
+}
+catch (Exception ex)
+{
+    <p>Exception: @ex.Message</p>
+}
+
+@if (Model != null)
+{
+    <table class="table table-center">
+        <thead class="thead-inverse">
+            <tr>
+                <th>Id</th>
+                <th>Код</th>
+                <th>Значение</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th scope="row">@item?.Id</th>
+                    <td>@item?.Code</td>
+                    <td>@item?.Value</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="text-center" style="margin-top: 100px;">
+        <h4>Загрузите файл.</h4>
+    </div>
+}
